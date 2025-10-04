@@ -33,6 +33,7 @@ Route::get('/incidents', [IncidentController::class, 'index']);
 Route::get('/incidents/{id}', [IncidentController::class, 'show']);
 Route::put('/incidents/{id}', [IncidentController::class, 'update']);
 Route::delete('/incidents/{id}', [IncidentController::class, 'destroy']);
+Route::get('/admin', [AuthController::class, 'admin']);
 
 Route::post('/seed/users', function () {
     Artisan::call('db:seed', [
