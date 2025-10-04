@@ -28,6 +28,11 @@ Route::delete('/incident-types/{id}', [IncidentTypeController::class, 'destroy']
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::put('/users/{id}', [UserController::class, 'update']);
 Route::delete('/users/{id}', [UserController::class, 'destroy']);
+Route::post('/incidents', [IncidentController::class, 'store']);
+Route::get('/incidents', [IncidentController::class, 'index']);
+Route::get('/incidents/{id}', [IncidentController::class, 'show']);
+Route::put('/incidents/{id}', [IncidentController::class, 'update']);
+Route::delete('/incidents/{id}', [IncidentController::class, 'destroy']);
 
 Route::post('/seed/users', function () {
     Artisan::call('db:seed', [
