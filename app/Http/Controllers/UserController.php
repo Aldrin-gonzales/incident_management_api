@@ -91,6 +91,41 @@ class UserController extends Controller
 
         return response()->json($user); 
     }
+     public function update(int $id, Request $request): JsonResponse {
+        $validated = $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'mobile_number' => ['required', 'string', 'max:20'],
+            'age' => ['required', 'integer', 'min:0'],
+            'address' => ['required', 'string'],
+            'role' => ['required', 'in:admin,user'],
+            'password' => ['required', 'string', 'min:8'],
+            'profile_picture' => ['nullable', 'string'],
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update($validated);
+
+        return response()->json([
+            'message' => 'User updated successfully.',
+            'data' => $user->only([
+                'id',
+                'first_name',
+                'last_name',
+                'email',
+                'mobile_number',
+                'age',
+                'address',
+                'role',
+                'profile_picture',
+                'created_at',
+                'updated_at',
+            ]),
+        ], 200, [], JSON_PRETTY_PRINT);
+    }
+
+
     public function destroy(int $id): JsonResponse {
         $user = User::findOrFail($id);
         $user->delete();

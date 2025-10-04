@@ -19,6 +19,7 @@ Route::get('/test', function () {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/users', [UserController::class, 'store']);
+Route::post('/users/{id}', [UserController::class, 'update']);
 Route::get('/users', [UserController::class, 'index']);
 Route::post('/incident-types', [IncidentTypeController::class, 'store']);
 Route::get('/incident-types', [IncidentTypeController::class, 'index']);
