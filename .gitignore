@@ -22,3 +22,8 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+<<<<<<< HEAD
+=======
+.env.example
+.env
+>>>>>>> 125ec01 (Initial Commit)
