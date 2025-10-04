@@ -14,6 +14,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/users', [UserController::class, 'store']);
+Route::get('/users', [UserController::class, 'index']);
 
 Route::post('/seed/users', function () {
     Artisan::call('db:seed', [
