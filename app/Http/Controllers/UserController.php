@@ -74,4 +74,21 @@ class UserController extends Controller
             ]),
         ], 201, [], JSON_PRETTY_PRINT);
     }
+    public function show(int $id): JsonResponse {
+        $user = User::select([
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'mobile_number',
+            'age',
+            'address',
+            'role',
+            'profile_picture',
+            'created_at',
+            'updated_at',
+        ])->findOrFail($id);
+
+        return response()->json($user); 
+    }
 }
