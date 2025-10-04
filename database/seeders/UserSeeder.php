@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'first_name' => 'Marlon',
-                'last_name' => 'Bonong',
+                'last_name' => 'Bono',
                 'email' => 'marlon@example.com',
                 'password' => Hash::make('password'),
                 'mobile_number' => '09123456786',
@@ -64,3 +64,4 @@ class UserSeeder extends Seeder
         }
     }
 }
+
