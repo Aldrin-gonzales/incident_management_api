@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             IncidentTypeSeeder::class,
+            IncidentSeeder::class,
             AccessTokenSeeder::class,
         ]);
     }
