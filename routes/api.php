@@ -22,6 +22,12 @@ Route::post('/users', [UserController::class, 'store']);
 Route::get('/users', [UserController::class, 'index']);
 Route::post('/incident-types', [IncidentTypeController::class, 'store']);
 Route::get('/incident-types', [IncidentTypeController::class, 'index']);
+Route::get('/incident-types/{id}', [IncidentTypeController::class, 'show']);
+Route::put('/incident-types/{id}', [IncidentTypeController::class, 'update']);
+Route::delete('/incident-types/{id}', [IncidentTypeController::class, 'destroy']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 Route::post('/seed/users', function () {
     Artisan::call('db:seed', [
