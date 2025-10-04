@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\IncidentTypeController;
 use Database\Seeders\UserSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -19,6 +20,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/users', [UserController::class, 'index']);
+Route::post('/incident-types', [IncidentTypeController::class, 'store']);
+Route::get('/incident-types', [IncidentTypeController::class, 'index']);
 
 Route::post('/seed/users', function () {
     Artisan::call('db:seed', [
