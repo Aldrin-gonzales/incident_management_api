@@ -55,6 +55,17 @@ class UserSeeder extends Seeder
                 'role' => 'user',
                 'profile_picture' => null,
             ],
+            [
+                'first_name' => 'MDRRMO',
+                'last_name' => 'Bulan',
+                'email' => 'mdrrmobulan@example.com',
+                'password' => Hash::make('password'),
+                'mobile_number' => '09123456111',
+                'age' => 50,
+                'address' => 'Somagongsong Bulan Sorsogon',
+                'role' => 'user',
+                'profile_picture' => null,
+            ]
         ];
         foreach ($users as $userData) {
             User::updateOrCreate(
