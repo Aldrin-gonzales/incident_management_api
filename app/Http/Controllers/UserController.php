@@ -25,10 +25,18 @@ class UserController extends Controller
             'updated_at',
         ])->orderBy('last_name')->get();
 
-        return response()->json([
-            'count' => $users->count(),
-            'data' => $users,
-        ], 200, [], JSON_PRETTY_PRINT);
+        if ($users->isNotEmpty()) {
+            return response()->json([
+                'status' => 'success',
+                'count' => $users->count(),
+                'data' => $users,
+            ], 200, [], JSON_PRETTY_PRINT);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No users found.',
+            ], 404, [], JSON_PRETTY_PRINT);
+        }
     }
 
     public function store(Request $request): JsonResponse
@@ -57,23 +65,32 @@ class UserController extends Controller
             'profile_picture' => $validated['profile_picture'] ?? null,
         ]);
 
-        return response()->json([
-            'message' => 'User created successfully.',
-            'data' => $user->only([
-                'id',
-                'first_name',
-                'last_name',
-                'email',
-                'mobile_number',
-                'age',
-                'address',
-                'role',
-                'profile_picture',
-                'created_at',
-                'updated_at',
-            ]),
-        ], 201, [], JSON_PRETTY_PRINT);
+        if ($user) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User created successfully.',
+                'data' => $user->only([
+                    'id',
+                    'first_name',
+                    'last_name',
+                    'email',
+                    'mobile_number',
+                    'age',
+                    'address',
+                    'role',
+                    'profile_picture',
+                    'created_at',
+                    'updated_at',
+                ]),
+            ], 201, [], JSON_PRETTY_PRINT);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to create user.',
+            ], 500, [], JSON_PRETTY_PRINT);
+        }
     }
+
     public function show(int $id): JsonResponse {
         $user = User::select([
             'id',
@@ -89,10 +106,18 @@ class UserController extends Controller
             'updated_at',
         ])->findOrFail($id);
 
-        return response()->json([
-        'message' => 'User retrieved successfully.',
-        'data' => $user,
-    ], 200, [], JSON_PRETTY_PRINT); 
+        if ($user) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User retrieved successfully.',
+                'data' => $user,
+            ], 200, [], JSON_PRETTY_PRINT); 
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found.',
+            ], 404, [], JSON_PRETTY_PRINT);
+        } 
     }
 
     public function update(int $id, Request $request): JsonResponse {
@@ -108,34 +133,49 @@ class UserController extends Controller
             'profile_picture' => ['nullable', 'string'],
         ]);
 
-        $user = User::findOrFail($id);
-        $user->update($validated);
+        $user = User::find($id);
 
-        return response()->json([
-            'message' => 'User updated successfully.',
-            'data' => $user->only([
-                'id',
-                'first_name',
-                'last_name',
-                'email',
-                'mobile_number',
-                'age',
-                'address',
-                'role',
-                'profile_picture',
-                'created_at',
-                'updated_at',
-            ]),
-        ], 200, [], JSON_PRETTY_PRINT);
+        if ($user) {
+            $user->update($validated);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User updated successfully.',
+                'data' => $user->only([
+                    'id',
+                    'first_name',
+                    'last_name',
+                    'email',
+                    'mobile_number',
+                    'age',
+                    'address',
+                    'role',
+                    'profile_picture',
+                    'created_at',
+                    'updated_at',
+                ]),
+            ], 200, [], JSON_PRETTY_PRINT);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found.',
+            ], 404, [], JSON_PRETTY_PRINT);
+        }
     }
 
 
     public function destroy(int $id): JsonResponse {
-        $user = User::findOrFail($id);
-        $user->delete();
-
-        return response()->json([
-            'message' => 'User deleted successfully.',
-        ]);
+        $user = User::find($id);
+        if ($user) {
+            $user->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User deleted successfully.',
+            ], 200, [], JSON_PRETTY_PRINT);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found.',
+            ], 404, [], JSON_PRETTY_PRINT);
+        }
     }
 }
