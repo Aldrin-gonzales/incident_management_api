@@ -11,7 +11,7 @@ class IncidentTypeSeeder extends Seeder
     {
         $types = [
             [
-                'name' => 'Fire',
+                'name' => 'Fire Emergency(Sunog)',
                 'description' => 'Incidents involving fire breakouts or smoke sightings.',
             ],
             [
@@ -25,6 +25,18 @@ class IncidentTypeSeeder extends Seeder
             [
                 'name' => 'Vehicular Accident',
                 'description' => '2 or more Vehicle collisions or breakdowns, or collision with person.',
+            ],
+            [
+                'name' => 'Power Outage',
+                'description' => 'Loss of electrical power in an area or facility.',
+            ],
+            [
+                'name' => 'Public Disturbance',
+                'description' => 'Riots, protests, or large gatherings causing disruption.',
+            ],
+            [
+                'name' => 'Other',
+                'description' => 'Incidents that do not fit into the predefined categories.',
             ],
         ];
 
