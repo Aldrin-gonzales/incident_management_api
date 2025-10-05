@@ -54,7 +54,10 @@ public function show(int $id): JsonResponse {
         'updated_at',
     ])->findOrFail($id);
 
-    return response()->json($incident);
+     return response()->json([
+        'message' => 'Incident retrieved successfully.',
+        'data' => $incident,
+    ]);
 }
   public function destroy(int $id): JsonResponse {
     $incident = Incident::findOrFail($id);

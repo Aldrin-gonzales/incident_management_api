@@ -49,7 +49,10 @@ class IncidentTypeController extends Controller
             'updated_at',
         ])->findOrFail($id);
 
-        return response()->json($incidentType);
+        return response()->json([
+        'message' => 'Incident type retrieved successfully.',
+        'data' => $incidentType,
+        ]);
     }
     public function update(Request $request, int $id): JsonResponse
     {

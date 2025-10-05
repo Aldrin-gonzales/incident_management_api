@@ -89,9 +89,13 @@ class UserController extends Controller
             'updated_at',
         ])->findOrFail($id);
 
-        return response()->json($user); 
+        return response()->json([
+        'message' => 'User retrieved successfully.',
+        'data' => $user,
+    ], 200, [], JSON_PRETTY_PRINT); 
     }
-     public function update(int $id, Request $request): JsonResponse {
+
+    public function update(int $id, Request $request): JsonResponse {
         $validated = $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
