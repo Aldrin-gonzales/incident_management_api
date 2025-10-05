@@ -17,8 +17,20 @@ class IncidentTypeController extends Controller
             'updated_at',
         ])->get();
 
-        return response()->json($incidentTypes);
+        if ($incidentTypes->isNotEmpty()) {
+            return response()->json([
+                'status' => 'success',
+                'count' => $incidentTypes->count(),
+                'data' => $incidentTypes,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No incident types found.',
+            ], 404);
+        }
     }
+
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -28,17 +40,26 @@ class IncidentTypeController extends Controller
 
         $incidentType = IncidentType::create($validated);
 
-        return response()->json([
-            'message' => 'Incident type created successfully.',
-            'data' => $incidentType->only([
-                'id',
-                'name',
-                'description',
-                'created_at',
-                'updated_at',
-            ]),
-        ]);
+        if ($incidentType) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Incident type created successfully.',
+                'data' => $incidentType->only([
+                    'id',
+                    'name',
+                    'description',
+                    'created_at',
+                    'updated_at',
+                ]),
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to create incident type.',
+            ], 500);
+        }
     }
+
     public function show(int $id): JsonResponse
     {
         $incidentType = IncidentType::select([
@@ -47,13 +68,22 @@ class IncidentTypeController extends Controller
             'description',
             'created_at',
             'updated_at',
-        ])->findOrFail($id);
+        ])->find($id);
 
-        return response()->json([
-        'message' => 'Incident type retrieved successfully.',
-        'data' => $incidentType,
-        ]);
+        if ($incidentType) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Incident type retrieved successfully.',
+                'data' => $incidentType,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Incident type not found.',
+            ], 404);
+        }
     }
+
     public function update(Request $request, int $id): JsonResponse
     {
         $validated = $request->validate([
@@ -61,27 +91,44 @@ class IncidentTypeController extends Controller
             'description' => 'required|string',
         ]);
 
-        $incidentType = IncidentType::findOrFail($id);
-        $incidentType->update($validated);
+        $incidentType = IncidentType::find($id);
 
-        return response()->json([
-            'message' => 'Incident type updated successfully.',
-            'data' => $incidentType->only([
-                'id',
-                'name',
-                'description',
-                'created_at',
-                'updated_at',
+        if ($incidentType) {
+            $incidentType->update($validated);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Incident type updated successfully.',
+                'data' => $incidentType->only([
+                    'id',
+                    'name',
+                    'description',
+                    'created_at',
+                    'updated_at',
             ]),
         ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Incident type not found.',
+            ], 404);
+        }
     }
+    
     public function destroy(int $id): JsonResponse
     {
-        $incidentType = IncidentType::findOrFail($id);
-        $incidentType->delete();
+        $incidentType = IncidentType::find($id);
 
-        return response()->json([
-            'message' => 'Incident type deleted successfully.',
-        ]);
+        if ($incidentType) {
+            $incidentType->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Incident type deleted successfully.',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Incident type not found.',
+            ], 404);
+        }
     }
 }
