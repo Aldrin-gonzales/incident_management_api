@@ -34,7 +34,7 @@ class IncidentTypeSeeder extends Seeder
                 'name' => 'Public Disturbance',
                 'description' => 'Riots, protests, or large gatherings causing disruption.',
             ],
-            [
+            [ 
                 'name' => 'Other',
                 'description' => 'Incidents that do not fit into the predefined categories.',
             ],
