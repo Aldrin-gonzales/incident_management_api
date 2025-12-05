@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "public/index.php",
+      "use": "@vercel/php@0.7.0",
+      "config": {
+        "maxDuration": 30
+      }
+    }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/public/index.php" }
+  ],
+  "env": {
+    "APP_ENV": "production",
+    "APP_DEBUG": "false",
+    "APP_URL": "https://incident-management-api.vercel.app",
+    "APP_KEY": "base64:zs3TfT/j7kzcc27NpyWqJ/juGMMOjT7kdB23j2yL3uE="
+  }
+}

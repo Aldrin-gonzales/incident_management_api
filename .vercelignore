@@ -1,0 +1,23 @@
+# Ignore everything by default
+*
+
+# Include necessary files
+!public/
+!app/
+!bootstrap/
+!config/
+!database/
+!resources/
+!routes/
+!storage/
+!vendor/
+!artisan
+!composer.json
+!composer.lock
+!vercel.json
+!server.php
+
+# Ignore development files
+node_modules/
+npm-debug.log
+.phpunit.result.cache
